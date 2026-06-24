@@ -32,6 +32,9 @@ MODEL_FILES = {
         "binary": MODELS_DIR / "anomaly_mlp_binary.onnx",
         "multiclass": MODELS_DIR / "anomaly_mlp.onnx",
     },
+    "isolation_forest": {
+        "binary": MODELS_DIR / "anomaly_isolation_forest.joblib",
+    },
 }
 COLLECTION_PROFILES = {
     "low": {"workers": "2", "memory_mib": "96"},
@@ -550,14 +553,21 @@ def experiment():
 def train():
     model_type = request.form.get("model_type", "binary")
     algorithm = request.form.get("algorithm", "random_forest")
+    if algorithm == "isolation_forest" and model_type != "binary":
+        abort(400)
     selected_model = model_file(algorithm, model_type)
     selected_runs = request.form.getlist("run")
     valid_runs = set(model_training_runs())
     if not selected_runs or any(name not in valid_runs for name in selected_runs):
         abort(400)
-    command = [
-        str(ROOT / ("train_mlp_onnx.py" if algorithm == "onnx_mlp" else "train_model.py"))
-    ]
+    trainers = {
+        "random_forest": "train_model.py",
+        "onnx_mlp": "train_mlp_onnx.py",
+        "isolation_forest": "train_isolation_forest.py",
+    }
+    if algorithm not in trainers:
+        abort(400)
+    command = [str(ROOT / trainers[algorithm])]
     for name in selected_runs:
         command.extend(["--run-dir", str(RUNS_DIR / name)])
     eval_run = request.form.get("eval_run", "")
@@ -565,7 +575,7 @@ def train():
         if eval_run not in set(evaluation_runs()):
             abort(400)
         command.extend(["--eval-run-dir", str(RUNS_DIR / eval_run)])
-    if model_type == "binary":
+    if model_type == "binary" and algorithm != "isolation_forest":
         command.extend(["--target", "label"])
     output = (
         MODELS_DIR / ("anomaly_mlp_binary.onnx" if model_type == "binary" else "anomaly_mlp.onnx")

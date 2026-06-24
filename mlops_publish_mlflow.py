@@ -10,6 +10,9 @@ ROOT = Path(__file__).resolve().parent
 DEFAULT_MODELS = {
     "random_forest_multiclass": ["anomaly_detector.joblib", "anomaly_detector.json"],
     "random_forest_binary": ["anomaly_binary_detector.joblib", "anomaly_binary_detector.json"],
+    "isolation_forest_binary": [
+        "anomaly_isolation_forest.joblib", "anomaly_isolation_forest.json",
+    ],
     "onnx_mlp_multiclass": [
         "anomaly_mlp.onnx", "anomaly_mlp.onnx.data", "anomaly_mlp.pt",
         "anomaly_mlp.scaler.joblib", "anomaly_mlp.json", "anomaly_mlp_weights.json",

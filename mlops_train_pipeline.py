@@ -25,6 +25,8 @@ MODEL_FILES = [
     ROOT / "models" / "anomaly_detector.json",
     ROOT / "models" / "anomaly_binary_detector.joblib",
     ROOT / "models" / "anomaly_binary_detector.json",
+    ROOT / "models" / "anomaly_isolation_forest.joblib",
+    ROOT / "models" / "anomaly_isolation_forest.json",
     ROOT / "models" / "anomaly_mlp.onnx",
     ROOT / "models" / "anomaly_mlp.onnx.data",
     ROOT / "models" / "anomaly_mlp.pt",
@@ -147,6 +149,9 @@ def model_record(name, metadata_path, artifact_paths, benchmark=None):
     }
     if "class_weight" in metadata:
         record["class_weight"] = metadata["class_weight"]
+    for key in ("algorithm", "training_mode", "contamination", "default_threshold"):
+        if key in metadata:
+            record[key] = metadata[key]
     if benchmark:
         record["benchmark"] = benchmark
     return record
@@ -294,6 +299,11 @@ def main():
             "--target", "label", "--class-weight", "none",
             "--output", "models/anomaly_binary_detector.joblib",
         ])
+        run([
+            "python3", "train_isolation_forest.py", *common_train, *common_eval,
+            "--contamination", "0.15", "--threshold", "0.5",
+            "--output", "models/anomaly_isolation_forest.joblib",
+        ])
         run(["python3", "train_mlp_onnx.py", *common_train, *common_eval, "--output", "models/anomaly_mlp.onnx"])
         run([
             "python3", "train_mlp_onnx.py", *common_train, *common_eval,
@@ -332,6 +342,10 @@ def main():
             ], benchmark[0]),
             model_record("random_forest_binary", ROOT / "models" / "anomaly_binary_detector.json", [
                 "models/anomaly_binary_detector.joblib", "models/anomaly_binary_detector.json",
+            ]),
+            model_record("isolation_forest_binary", ROOT / "models" / "anomaly_isolation_forest.json", [
+                "models/anomaly_isolation_forest.joblib",
+                "models/anomaly_isolation_forest.json",
             ]),
             model_record("onnx_mlp_multiclass", ROOT / "models" / "anomaly_mlp.json", [
                 "models/anomaly_mlp.onnx", "models/anomaly_mlp.pt",

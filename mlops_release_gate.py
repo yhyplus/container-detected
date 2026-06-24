@@ -62,6 +62,8 @@ def main():
     parser.add_argument("--min-macro-f1", type=float, default=0.95)
     parser.add_argument("--max-accuracy-drop", type=float, default=0.01)
     parser.add_argument("--max-macro-f1-drop", type=float, default=0.01)
+    parser.add_argument("--one-class-min-accuracy", type=float, default=0.85)
+    parser.add_argument("--one-class-min-macro-f1", type=float, default=0.80)
     parser.add_argument("--output", type=Path, default=Path("reports/release_gate_report.json"))
     args = parser.parse_args()
 
@@ -87,10 +89,13 @@ def main():
         base = baseline.get(name, {})
         baseline_accuracy = base.get("accuracy")
         baseline_macro_f1 = base.get("macro_f1")
-        if accuracy is not None and accuracy < args.min_accuracy:
-            issues.append(f"{name} accuracy {accuracy:.4f} < {args.min_accuracy:.4f}")
-        if macro_f1 is not None and macro_f1 < args.min_macro_f1:
-            issues.append(f"{name} macro_f1 {macro_f1:.4f} < {args.min_macro_f1:.4f}")
+        is_one_class = model.get("training_mode") == "normal_only"
+        min_accuracy = args.one_class_min_accuracy if is_one_class else args.min_accuracy
+        min_macro_f1 = args.one_class_min_macro_f1 if is_one_class else args.min_macro_f1
+        if accuracy is not None and accuracy < min_accuracy:
+            issues.append(f"{name} accuracy {accuracy:.4f} < {min_accuracy:.4f}")
+        if macro_f1 is not None and macro_f1 < min_macro_f1:
+            issues.append(f"{name} macro_f1 {macro_f1:.4f} < {min_macro_f1:.4f}")
         if baseline_accuracy is not None and accuracy is not None:
             drop = baseline_accuracy - accuracy
             if drop > args.max_accuracy_drop:
@@ -117,6 +122,8 @@ def main():
             "min_macro_f1": args.min_macro_f1,
             "max_accuracy_drop": args.max_accuracy_drop,
             "max_macro_f1_drop": args.max_macro_f1_drop,
+            "one_class_min_accuracy": args.one_class_min_accuracy,
+            "one_class_min_macro_f1": args.one_class_min_macro_f1,
         },
         "issues": issues,
         "warnings": warnings,

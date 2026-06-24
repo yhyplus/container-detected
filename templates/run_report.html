@@ -3,7 +3,7 @@
 <title>检测报告</title><link rel="stylesheet" href="/static/styles.css"></head>
 <body><main class="shell">
   <header class="topbar"><div><a href="/">← 返回控制台</a><h1 style="margin-top:12px">检测报告</h1><div class="muted">{{ run_name }}</div></div>
-  <span class="badge">{{ '方案 B：ONNX' if summary.algorithm == 'onnx_mlp' else '方案 A：RF' }} · {{ '六分类诊断' if summary.model_type == 'multiclass' else '二分类告警' }}</span></header>
+  <span class="badge">{{ '方案 C：孤立森林' if summary.algorithm == 'isolation_forest' else ('方案 B：ONNX' if summary.algorithm == 'onnx_mlp' else '方案 A：RF') }} · {{ '六分类诊断' if summary.model_type == 'multiclass' else '二分类告警' }}</span></header>
   <section class="hero"><div><span class="badge {{ 'badge-bad' if summary.alerts else 'badge-ok' }}">{{ '发现异常' if summary.alerts else '环境正常' }}</span>
     <h2 style="margin-top:10px">{{ '模型发现了需要关注的异常流量' if summary.alerts else '模型没有发现需要告警的异常流量' }}</h2>
     <p class="muted">{{ '下方只展示触发告警的时间窗口。' if showing_alerts else '下方展示最近的观测窗口，供你确认当前环境状态。' }}</p></div>

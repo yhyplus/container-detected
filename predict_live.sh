@@ -31,6 +31,7 @@ python3 "$ROOT/build_live_windows.py" \
 case "$ALGORITHM" in
   random_forest) PREDICTOR="$ROOT/predict_model.py" ;;
   onnx_mlp) PREDICTOR="$ROOT/predict_onnx.py" ;;
+  isolation_forest) PREDICTOR="$ROOT/predict_isolation_forest.py" ;;
   *) echo "Unsupported prediction algorithm: $ALGORITHM" >&2; exit 1 ;;
 esac
 python3 "$PREDICTOR" \

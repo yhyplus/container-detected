@@ -3,52 +3,54 @@
     {
       "accuracy": 0.9944444444444445,
       "batch_rows": 1080,
-      "cpu_percent_process_aggregate": 100.08739961615292,
-      "latency_ms_mean": 13.33705431981798,
-      "latency_ms_p95": 14.30996399722062,
+      "cpu_percent_process_aggregate": 99.97285078110826,
+      "latency_ms_mean": 28.90567030999364,
+      "latency_ms_p95": 32.87066200005029,
       "macro_f1": 0.9953618406103666,
       "model": "sklearn_random_forest",
       "model_size_kib": 1498.1875,
       "repeats": 200,
-      "rss_mib": 197.6484375,
-      "throughput_windows_sec": 80969.58171194392
+      "rss_mib": 199.53515625,
+      "throughput_windows_sec": 37360.09648567368
     },
     {
       "accuracy": 0.9907407407407407,
       "batch_rows": 1080,
-      "cpu_percent_process_aggregate": 105.2278843866421,
-      "latency_ms_mean": 0.09460879507969366,
-      "latency_ms_p95": 0.11915699724340811,
+      "cpu_percent_process_aggregate": 93.18815550559336,
+      "latency_ms_mean": 0.21414061500081516,
+      "latency_ms_p95": 0.3570960000160994,
       "macro_f1": 0.9906978005586744,
       "model": "onnxruntime_mlp",
       "model_size_kib": 8.302734375,
       "repeats": 200,
-      "rss_mib": 205.3359375,
-      "throughput_windows_sec": 11364611.51375658
+      "rss_mib": 207.22265625,
+      "throughput_windows_sec": 5032160.397302148
     }
   ],
-  "benchmark_input": "runs/eval-v3-combined-v4-20260623/training_multiclass_windows.csv",
+  "benchmark_input": "runs/eval-v3-combined-v4-iforest-20260624/training_multiclass_windows.csv",
   "data_validation_report": "reports/data_validation_report.json",
-  "generated_at": "2026-06-23T12:09:52.564757+00:00",
+  "generated_at": "2026-06-24T06:53:34.922427+00:00",
   "model_artifact_snapshot": [
-    "registry/models/v4-20260623/anomaly_detector.joblib",
-    "registry/models/v4-20260623/anomaly_detector.json",
-    "registry/models/v4-20260623/anomaly_binary_detector.joblib",
-    "registry/models/v4-20260623/anomaly_binary_detector.json",
-    "registry/models/v4-20260623/anomaly_mlp.onnx",
-    "registry/models/v4-20260623/anomaly_mlp.onnx.data",
-    "registry/models/v4-20260623/anomaly_mlp.pt",
-    "registry/models/v4-20260623/anomaly_mlp.scaler.joblib",
-    "registry/models/v4-20260623/anomaly_mlp.json",
-    "registry/models/v4-20260623/anomaly_mlp_binary.onnx",
-    "registry/models/v4-20260623/anomaly_mlp_binary.onnx.data",
-    "registry/models/v4-20260623/anomaly_mlp_binary.pt",
-    "registry/models/v4-20260623/anomaly_mlp_binary.scaler.joblib",
-    "registry/models/v4-20260623/anomaly_mlp_binary.json",
-    "registry/models/v4-20260623/anomaly_mlp_weights.json",
-    "registry/models/v4-20260623/anomaly_mlp_weights.json",
-    "registry/models/v4-20260623/Dockerfile.inference-pure",
-    "registry/models/v4-20260623/anomaly-inference.yaml"
+    "registry/models/v4-iforest-20260624/anomaly_detector.joblib",
+    "registry/models/v4-iforest-20260624/anomaly_detector.json",
+    "registry/models/v4-iforest-20260624/anomaly_binary_detector.joblib",
+    "registry/models/v4-iforest-20260624/anomaly_binary_detector.json",
+    "registry/models/v4-iforest-20260624/anomaly_isolation_forest.joblib",
+    "registry/models/v4-iforest-20260624/anomaly_isolation_forest.json",
+    "registry/models/v4-iforest-20260624/anomaly_mlp.onnx",
+    "registry/models/v4-iforest-20260624/anomaly_mlp.onnx.data",
+    "registry/models/v4-iforest-20260624/anomaly_mlp.pt",
+    "registry/models/v4-iforest-20260624/anomaly_mlp.scaler.joblib",
+    "registry/models/v4-iforest-20260624/anomaly_mlp.json",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_binary.onnx",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_binary.onnx.data",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_binary.pt",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_binary.scaler.joblib",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_binary.json",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_weights.json",
+    "registry/models/v4-iforest-20260624/anomaly_mlp_weights.json",
+    "registry/models/v4-iforest-20260624/Dockerfile.inference-pure",
+    "registry/models/v4-iforest-20260624/anomaly-inference.yaml"
   ],
   "models": [
     {
@@ -60,18 +62,18 @@
       "benchmark": {
         "accuracy": 0.9944444444444445,
         "batch_rows": 1080,
-        "cpu_percent_process_aggregate": 100.08739961615292,
-        "latency_ms_mean": 13.33705431981798,
-        "latency_ms_p95": 14.30996399722062,
+        "cpu_percent_process_aggregate": 99.97285078110826,
+        "latency_ms_mean": 28.90567030999364,
+        "latency_ms_p95": 32.87066200005029,
         "macro_f1": 0.9953618406103666,
         "model": "sklearn_random_forest",
         "model_size_kib": 1498.1875,
         "repeats": 200,
-        "rss_mib": 197.6484375,
-        "throughput_windows_sec": 80969.58171194392
+        "rss_mib": 199.53515625,
+        "throughput_windows_sec": 37360.09648567368
       },
       "class_weight": "balanced",
-      "created_at": "2026-06-23T12:09:25.228270+00:00",
+      "created_at": "2026-06-24T06:52:43.444789+00:00",
       "evaluation_runs": [
         "runs/eval-v3-combined-auto-newdata-20260611-0108",
         "runs/eval-v4-large-20260623"
@@ -102,7 +104,7 @@
         "models/anomaly_binary_detector.json"
       ],
       "class_weight": "none",
-      "created_at": "2026-06-23T12:09:26.511608+00:00",
+      "created_at": "2026-06-24T06:52:45.831486+00:00",
       "evaluation_runs": [
         "runs/eval-v3-combined-auto-newdata-20260611-0108",
         "runs/eval-v4-large-20260623"
@@ -123,6 +125,35 @@
       "weighted_f1": 0.9972243086930472
     },
     {
+      "accuracy": 0.9268518518518518,
+      "algorithm": "isolation_forest",
+      "artifacts": [
+        "models/anomaly_isolation_forest.joblib",
+        "models/anomaly_isolation_forest.json"
+      ],
+      "contamination": 0.15,
+      "created_at": "2026-06-24T06:52:48.592711+00:00",
+      "default_threshold": 0.5,
+      "evaluation_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ],
+      "macro_f1": 0.8937207816231123,
+      "metadata_path": "models/anomaly_isolation_forest.json",
+      "name": "isolation_forest_binary",
+      "target": "label",
+      "training_classes": {
+        "0": 348
+      },
+      "training_mode": "normal_only",
+      "training_rows": 348,
+      "training_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ],
+      "weighted_f1": 0.9269067955835745
+    },
+    {
       "accuracy": 0.9907407407407407,
       "artifacts": [
         "models/anomaly_mlp.onnx",
@@ -133,17 +164,17 @@
       "benchmark": {
         "accuracy": 0.9907407407407407,
         "batch_rows": 1080,
-        "cpu_percent_process_aggregate": 105.2278843866421,
-        "latency_ms_mean": 0.09460879507969366,
-        "latency_ms_p95": 0.11915699724340811,
+        "cpu_percent_process_aggregate": 93.18815550559336,
+        "latency_ms_mean": 0.21414061500081516,
+        "latency_ms_p95": 0.3570960000160994,
         "macro_f1": 0.9906978005586744,
         "model": "onnxruntime_mlp",
         "model_size_kib": 8.302734375,
         "repeats": 200,
-        "rss_mib": 205.3359375,
-        "throughput_windows_sec": 11364611.51375658
+        "rss_mib": 207.22265625,
+        "throughput_windows_sec": 5032160.397302148
       },
-      "created_at": "2026-06-23T12:09:37.185155+00:00",
+      "created_at": "2026-06-24T06:53:05.993502+00:00",
       "evaluation_runs": [
         "runs/eval-v3-combined-auto-newdata-20260611-0108",
         "runs/eval-v4-large-20260623"
@@ -175,7 +206,7 @@
         "models/anomaly_mlp_binary.scaler.joblib",
         "models/anomaly_mlp_binary.json"
       ],
-      "created_at": "2026-06-23T12:09:45.874163+00:00",
+      "created_at": "2026-06-24T06:53:21.899656+00:00",
       "evaluation_runs": [
         "runs/eval-v3-combined-auto-newdata-20260611-0108",
         "runs/eval-v4-large-20260623"
@@ -196,11 +227,11 @@
       "weighted_f1": 0.9907818168862982
     }
   ],
-  "previous_production_version": "auto-newdata-20260611-0108",
+  "previous_production_version": "v4-20260623",
   "production_path": "registry/production",
-  "production_version": "v4-20260623",
+  "production_version": "v4-iforest-20260624",
   "stage": "Production",
-  "stage_note": "V4 expanded dataset validated on 1080 independent windows",
-  "stage_updated_at": "2026-06-23T12:10:13.901145+00:00",
-  "version": "v4-20260623"
+  "stage_note": "Added normal-only Isolation Forest binary alert model",
+  "stage_updated_at": "2026-06-24T06:53:45.790160+00:00",
+  "version": "v4-iforest-20260624"
 }

@@ -40,7 +40,9 @@ function renderRuns(runs) {
   body.innerHTML = runs.map((run) => {
     const state = run.alerts ? badge("发现异常", "badge-bad") : badge("正常", "badge-ok");
     const mode = badge(run.model_type === "multiclass" ? "六分类" : "二分类");
-    const algorithm = run.algorithm === "onnx_mlp" ? "方案 B：ONNX" : "方案 A：RF";
+    const algorithm = run.algorithm === "isolation_forest"
+      ? "方案 C：孤立森林"
+      : run.algorithm === "onnx_mlp" ? "方案 B：ONNX" : "方案 A：RF";
     return `<tr><td><a href="/runs/${encodeURIComponent(run.name)}">${escapeHtml(run.name)}</a></td>
       <td>${algorithm}</td><td>${mode}</td><td>${state}</td><td>${run.windows}</td><td>${run.observed}</td>
       <td>${run.alerts}</td><td>${(run.latest_alert_probability * 100).toFixed(1)}%</td>
@@ -197,3 +199,31 @@ refreshMlopsPipeline();
 setInterval(refreshDashboard, 2000);
 setInterval(refreshInferenceMetrics, 1000);
 setInterval(refreshMlopsPipeline, 3000);
+
+document.querySelectorAll("[data-algorithm-select]").forEach((algorithmSelect) => {
+  const form = algorithmSelect.closest("form");
+  const modelTypeSelect = form?.querySelector("[data-model-type-select]");
+  const thresholdInput = form?.querySelector("[data-threshold-input]");
+  if (!modelTypeSelect) return;
+  const syncModelType = () => {
+    const isolationForest = algorithmSelect.value === "isolation_forest";
+    const multiclass = [...modelTypeSelect.options].find((option) => option.value === "multiclass");
+    if (multiclass) multiclass.disabled = isolationForest;
+    if (isolationForest) {
+      modelTypeSelect.value = "binary";
+      if (thresholdInput) thresholdInput.value = "0.5";
+    }
+  };
+  algorithmSelect.addEventListener("change", syncModelType);
+  syncModelType();
+});
+
+document.querySelectorAll("[data-experiment-algorithm]").forEach((algorithmSelect) => {
+  const modelType = algorithmSelect.closest("form")?.querySelector("[data-experiment-model-type]");
+  if (!modelType) return;
+  const syncExperimentMode = () => {
+    modelType.value = algorithmSelect.value === "isolation_forest" ? "binary" : "multiclass";
+  };
+  algorithmSelect.addEventListener("change", syncExperimentMode);
+  syncExperimentMode();
+});

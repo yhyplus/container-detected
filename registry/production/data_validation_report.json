@@ -228,7 +228,7 @@
       },
       "name": "train",
       "passed": true,
-      "path": "runs/train-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "path": "runs/train-v3-combined-v4-iforest-20260624/training_multiclass_windows.csv",
       "rows": 1749,
       "scenario_distribution": {
         "cpu": 170,
@@ -477,7 +477,7 @@
       },
       "name": "eval",
       "passed": true,
-      "path": "runs/eval-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "path": "runs/eval-v3-combined-v4-iforest-20260624/training_multiclass_windows.csv",
       "rows": 1080,
       "scenario_distribution": {
         "cpu": 120,
@@ -499,7 +499,7 @@
       ]
     }
   ],
-  "generated_at": "2026-06-23T12:09:22.926258+00:00",
+  "generated_at": "2026-06-24T06:52:40.998570+00:00",
   "passed": true,
   "thresholds": {
     "min_class_rows": 20,

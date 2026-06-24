@@ -27,6 +27,13 @@
       "previous_production_version": "auto-newdata-20260611-0108",
       "time": "2026-06-23T12:10:13.901145+00:00",
       "version": "v4-20260623"
+    },
+    {
+      "event": "promote",
+      "note": "Added normal-only Isolation Forest binary alert model",
+      "previous_production_version": "v4-20260623",
+      "time": "2026-06-24T06:53:45.790160+00:00",
+      "version": "v4-iforest-20260624"
     }
   ]
 }

@@ -10,7 +10,7 @@
         "5": 238
       },
       "columns": 35,
-      "combined_path": "runs/train-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "combined_path": "runs/train-v3-combined-v4-iforest-20260624/training_multiclass_windows.csv",
       "feature_count": 26,
       "features": [
         "cpu_pct",
@@ -71,7 +71,7 @@
         "5": 122
       },
       "columns": 35,
-      "combined_path": "runs/eval-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "combined_path": "runs/eval-v3-combined-v4-iforest-20260624/training_multiclass_windows.csv",
       "feature_count": 26,
       "features": [
         "cpu_pct",
@@ -123,6 +123,6 @@
       ]
     }
   ],
-  "generated_at": "2026-06-23T12:09:22.929955+00:00",
-  "version": "v4-20260623"
+  "generated_at": "2026-06-24T06:52:41.006964+00:00",
+  "version": "v4-iforest-20260624"
 }

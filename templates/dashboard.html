@@ -118,10 +118,10 @@
     <form class="action-card" method="post" action="/actions/experiment">
       <h3>{{ experiment.label }}</h3><p class="muted small">{{ experiment.description }}</p>
       <input type="hidden" name="scenario" value="{{ key }}">
-      <input type="hidden" name="model_type" value="multiclass">
+      <input type="hidden" name="model_type" value="multiclass" data-experiment-model-type>
       <input type="hidden" name="duration" value="60">
       <input type="hidden" name="threshold" value="0.5">
-      <label>检测算法</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option></select>
+      <label>检测算法</label><select name="algorithm" data-experiment-algorithm><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option><option value="isolation_forest">方案 C：孤立森林告警</option></select>
       <button>模拟并自动检测</button>
     </form>
     {% endfor %}
@@ -131,10 +131,10 @@
   <section class="form-grid">
     <form class="panel" method="post" action="/actions/predict">
       <h2>只检测当前流量</h2><p class="muted small">不会主动模拟异常，适合确认环境此刻是否正常。</p>
-      <label>检测算法</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option></select>
-      <label>检测模式</label><select name="model_type"><option value="binary">二分类：正常 / 异常</option><option value="multiclass">六分类：正常 / 五类异常</option></select>
+      <label>检测算法</label><select name="algorithm" data-algorithm-select><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option><option value="isolation_forest">方案 C：孤立森林（仅正常流量训练）</option></select>
+      <label>检测模式</label><select name="model_type" data-model-type-select><option value="binary">二分类：正常 / 异常</option><option value="multiclass">六分类：正常 / 五类异常</option></select>
       <label>回看时长（秒）</label><input name="lookback" type="number" value="120" min="30" max="3600">
-      <label>告警阈值</label><input name="threshold" type="number" value="0.7" min="0" max="1" step="0.05">
+      <label>告警阈值</label><input name="threshold" data-threshold-input type="number" value="0.7" min="0" max="1" step="0.05">
       <button>开始即时检测</button>
     </form>
     <form class="panel" method="post" action="/actions/collect">
@@ -147,8 +147,8 @@
     </form>
     <form class="panel" method="post" action="/actions/train">
       <h2>重新训练模型</h2><p class="muted small">提升六分类准确率时，勾选多档训练数据，并指定单独的评估数据。</p>
-      <label>算法方案</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：PyTorch MLP → ONNX</option></select>
-      <label>模型</label><select name="model_type"><option value="multiclass">六分类：正常 / 五类异常</option><option value="binary">二分类：异常告警</option></select>
+      <label>算法方案</label><select name="algorithm" data-algorithm-select><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：PyTorch MLP → ONNX</option><option value="isolation_forest">方案 C：孤立森林（仅正常流量训练）</option></select>
+      <label>模型</label><select name="model_type" data-model-type-select><option value="multiclass">六分类：正常 / 五类异常</option><option value="binary">二分类：异常告警</option></select>
       <label>参与训练的数据</label><div class="checks">
         {% for name in training_runs %}<label><input type="checkbox" name="run" value="{{ name }}">{{ name }}</label>
         {% else %}<span class="muted small">暂无可用训练数据</span>{% endfor %}
@@ -161,7 +161,7 @@
 
   <div class="section-head"><div><h2>检测历史</h2><div class="muted">点击运行名称查看中文检测报告。</div></div></div>
   <section class="panel table-wrap"><table><thead><tr><th>运行</th><th>算法</th><th>模式</th><th>状态</th><th>窗口</th><th>有效观测</th><th>告警</th><th>最高异常概率</th><th>最近窗口</th></tr></thead>
-  <tbody id="runs-body">{% for run in prediction_runs %}<tr><td><a href="/runs/{{ run.name }}">{{ run.name }}</a></td><td>{{ '方案 B：ONNX' if run.algorithm == 'onnx_mlp' else '方案 A：RF' }}</td><td><span class="badge">{{ '六分类' if run.model_type == 'multiclass' else '二分类' }}</span></td>
+  <tbody id="runs-body">{% for run in prediction_runs %}<tr><td><a href="/runs/{{ run.name }}">{{ run.name }}</a></td><td>{{ '方案 C：孤立森林' if run.algorithm == 'isolation_forest' else ('方案 B：ONNX' if run.algorithm == 'onnx_mlp' else '方案 A：RF') }}</td><td><span class="badge">{{ '六分类' if run.model_type == 'multiclass' else '二分类' }}</span></td>
   <td><span class="badge {{ 'badge-bad' if run.alerts else 'badge-ok' }}">{{ '发现异常' if run.alerts else '正常' }}</span></td><td>{{ run.windows }}</td><td>{{ run.observed }}</td><td>{{ run.alerts }}</td>
   <td>{{ '%.1f%%' | format(run.latest_alert_probability * 100) }}</td><td>{{ run.latest_time }}</td></tr>{% else %}<tr><td colspan="9">暂无检测记录</td></tr>{% endfor %}</tbody></table></section>
 
@@ -175,7 +175,7 @@
   <section class="panel">
     <div class="form-grid">
       <div><h3>六分类诊断模型</h3><p class="muted small"><b>class_id</b> 是训练目标：0=正常，1=DDoS，2=端口扫描，3=横向移动，4=资源异常，5=系统调用异常。HTTP、TCP 和 DNS 洪泛都属于 DDoS 子场景。</p></div>
-      <div><h3>二分类告警模型</h3><p class="muted small"><b>label</b> 是训练目标：0=正常，1=异常。五类异常都会合并为 1。</p></div>
+      <div><h3>二分类告警模型</h3><p class="muted small">RF 和 MLP 使用 <b>label</b> 监督训练；孤立森林只使用 label=0 的正常流量学习正常边界，偏离正常特征分布时直接告警。</p></div>
     </div>
     <p class="explain">原始 Pixie 表由 run_scenarios.sh 采集，build_dataset.py 将它们按 Pod 和 10 秒窗口聚合成 training_multiclass_windows.csv。train_model.py 根据你选择的模型，读取同一文件中的 class_id 或 label。</p>
   </section>

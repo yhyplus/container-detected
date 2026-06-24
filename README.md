@@ -144,6 +144,22 @@ python3 train_model.py \
   --output models/anomaly_binary_detector.joblib
 ```
 
+Train a one-class Isolation Forest using only normal (`label=0`) windows:
+
+```bash
+python3 train_isolation_forest.py \
+  --run-dir runs/train-v4-large-20260623 \
+  --eval-run-dir runs/eval-v4-large-20260623 \
+  --contamination 0.15 \
+  --output models/anomaly_isolation_forest.joblib
+```
+
+Anomalous windows are used only for held-out evaluation, never for fitting the
+Isolation Forest. The default threshold `0.5` corresponds to the learned
+normal/anomalous decision boundary. This model is intended as a sensitive
+unknown-anomaly detector and may produce more false positives than the
+supervised Random Forest and MLP models.
+
 ## Prediction
 
 Predict anomaly classes for an existing aggregated dataset:
@@ -167,6 +183,15 @@ Adjust the lookback and alert threshold when needed:
 
 ```bash
 LOOKBACK_SECONDS=300 THRESHOLD=0.8 ./predict_live.sh
+```
+
+Use the normal-only Isolation Forest for binary alerting:
+
+```bash
+ALGORITHM=isolation_forest \
+MODEL="$PWD/models/anomaly_isolation_forest.joblib" \
+THRESHOLD=0.5 \
+./predict_live.sh
 ```
 
 Use the six-class detector when investigating the likely anomaly type:
