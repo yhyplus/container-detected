@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: anomaly-inference-monitor
+  namespace: anomaly-test
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: metrics-snapshot
+              image: python:3.12-alpine
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - -c
+                - |
+                  import datetime
+                  import urllib.request
+
+                  url = "http://anomaly-inference:8080/metrics"
+                  print(datetime.datetime.now(datetime.UTC).isoformat())
+                  print(urllib.request.urlopen(url, timeout=5).read().decode())
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: anomaly-monitor-history
+  namespace: anomaly-test
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: history-snapshot
+              image: python:3.12-alpine
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - -c
+                - |
+                  import datetime
+                  import json
+                  import urllib.request
+
+                  text = urllib.request.urlopen("http://anomaly-inference:8080/metrics", timeout=5).read().decode()
+                  print(json.dumps({
+                      "captured_at": datetime.datetime.now(datetime.UTC).isoformat(),
+                      "metrics": text,
+                  }))

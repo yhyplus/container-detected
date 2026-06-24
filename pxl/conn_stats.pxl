@@ -1,0 +1,8 @@
+import px
+
+df = px.DataFrame(table='conn_stats', start_time='-20m')
+df.pod = df.ctx['pod']
+df = df[px.contains(df.pod, 'anomaly-test/')]
+px.display(df[['time_', 'upid', 'pod', 'remote_addr', 'remote_port', 'trace_role',
+               'protocol', 'conn_open', 'conn_close', 'conn_active',
+               'bytes_sent', 'bytes_recv']])

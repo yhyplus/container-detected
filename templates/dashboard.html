@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixie 异常检测实验室</title><link rel="stylesheet" href="/static/styles.css">
+</head>
+<body data-latest-run="{{ latest_run.name if latest_run else '' }}"><main class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="logo">PX</div><div><h1>Pixie 异常检测实验室</h1><div class="muted">模拟流量、运行检测、训练模型，都在一个页面完成。</div></div></div>
+    <span class="badge">anomaly-test 隔离环境</span>
+  </header>
+
+  {% if latest_run %}
+  <section class="hero">
+    <div>
+      <span class="badge {{ 'badge-bad' if latest_run.alerts else 'badge-ok' }}">{{ '发现异常' if latest_run.alerts else '运行正常' }}</span>
+      <h2 style="margin-top:10px">{{ '最近一次检测发现异常流量' if latest_run.alerts else '最近一次检测未发现异常流量' }}</h2>
+      <p class="muted">共检查 {{ latest_run.windows }} 个 10 秒窗口，其中 {{ latest_run.observed }} 个包含有效遥测数据。有效遥测表示窗口中至少有一个实际观测指标不为零。</p>
+      <a href="/runs/{{ latest_run.name }}">查看本次检测报告 →</a>
+    </div>
+    <div><div class="muted">告警窗口</div><div class="hero-number {{ 'status-bad' if latest_run.alerts else 'status-ok' }}">{{ latest_run.alerts }}</div></div>
+  </section>
+  {% else %}
+  <section class="hero"><div><span class="badge">尚未检测</span><h2 style="margin-top:10px">从一次隔离异常实验开始</h2><p class="muted">选择下面的异常类型，系统会自动模拟流量并运行模型检测。</p></div></section>
+  {% endif %}
+
+  <div class="section-head"><div><h2>在线推理监控</h2><div class="muted">页面实时刷新；启动异常实验后，窗口特征会同步发送到 K3s 推理服务，可直接观察告警、类别分布、异常概率和资源占用变化。</div></div><span id="inference-state" class="badge badge-warn">连接中</span></div>
+  <section class="panel">
+    <div class="live-grid">
+      <div class="metric live-metric"><div id="metric-requests" class="metric-value">0</div><div class="metric-label">预测请求</div></div>
+      <div class="metric live-metric"><div id="metric-alerts" class="metric-value status-bad">0</div><div id="metric-alert-rate" class="metric-label">告警率 0%</div></div>
+      <div class="metric live-metric"><div id="metric-latency" class="metric-value">0 ms</div><div id="metric-latency-max" class="metric-label">最大 0 ms</div></div>
+      <div class="metric live-metric"><div id="metric-memory" class="metric-value">0 MiB</div><div id="metric-cpu" class="metric-label">CPU 0s</div></div>
+    </div>
+    <div class="monitor-grid">
+      <div>
+        <h3>预测类别分布</h3>
+        <div id="metric-classes" class="bar-list"><div class="muted small">等待数据</div></div>
+      </div>
+      <div>
+        <h3>异常概率分布</h3>
+        <div id="metric-probability" class="bar-list"><div class="muted small">等待数据</div></div>
+      </div>
+      <div>
+        <h3>运行状态</h3>
+        <table class="mini-table"><tbody>
+          <tr><th>预测行数</th><td id="metric-rows">0</td></tr>
+          <tr><th>异常概率均值</th><td id="metric-prob-avg">0</td></tr>
+          <tr><th>异常概率范围</th><td id="metric-prob-range">0 - 0</td></tr>
+          <tr><th>服务运行时间</th><td id="metric-uptime">0s</td></tr>
+          <tr><th>刷新时间</th><td id="metric-updated">-</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-head"><div><h2>MLOps 自动化训练 Pipeline</h2><div class="muted">数据校验、训练评估、MLflow 模型管理、发布门禁、部署与重训练触发状态。</div></div><span id="mlops-stage" class="badge">{{ mlops_pipeline.stage }}</span></div>
+  <section class="panel" id="mlops-panel">
+    <div class="pipeline-top">
+      <div>
+        <div class="muted small">当前生产版本</div>
+        <div id="mlops-version" class="metric-value">{{ mlops_pipeline.version }}</div>
+      </div>
+      <div>
+        <div class="muted small">最近更新</div>
+        <div id="mlops-updated">{{ mlops_pipeline.generated_at }}</div>
+      </div>
+      <div>
+        <div class="muted small">最近演示</div>
+        <div id="mlops-run-status" class="status-line">{{ mlops_pipeline.latest_retrain.status if mlops_pipeline.latest_retrain else '-' }}</div>
+        <div id="mlops-run-time" class="muted small">{{ mlops_pipeline.latest_retrain.generated_at if mlops_pipeline.latest_retrain else '-' }}</div>
+      </div>
+      <form method="post" action="/actions/mlops_dry_run">
+        <button type="submit">演示自动化 Pipeline</button>
+      </form>
+    </div>
+    <div class="pipeline-flow" id="mlops-steps">
+      {% for step in mlops_pipeline.steps %}
+      <div class="pipeline-step {{ 'step-ok' if step.status == 'ok' else 'step-missing' }}">
+        <div class="step-dot"></div>
+        <h3>{{ step.title }}</h3>
+        <p class="muted small">{{ step.detail }}</p>
+        <div class="evidence">{{ step.evidence }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="monitor-grid mlops-detail">
+      <div>
+        <h3>模型版本</h3>
+        <div id="mlops-models" class="compact-list">
+          {% for model in mlops_pipeline.models %}
+          <div class="compact-row"><b>{{ model.name }}</b><span>{{ model.target }} · Acc {{ model.accuracy }} · F1 {{ model.macro_f1 }}</span></div>
+          {% else %}<div class="muted small">暂无模型版本</div>{% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>数据版本</h3>
+        <div id="mlops-datasets" class="compact-list">
+          {% for dataset in mlops_pipeline.datasets %}
+          <div class="compact-row"><b>{{ dataset.name }}</b><span>{{ dataset.rows }} 行 · {{ dataset.features }} 特征</span></div>
+          {% else %}<div class="muted small">暂无数据版本</div>{% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>MLflow 发布</h3>
+        <div id="mlops-mlflow" class="compact-list">
+          {% for model in mlops_pipeline.mlflow_models %}
+          <div class="compact-row"><b>{{ model.name }}</b><span>v{{ model.version }} · {{ model.alias }}</span></div>
+          {% else %}<div class="muted small">暂无发布记录</div>{% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-head"><div><h2>一键异常实验</h2><div class="muted">覆盖 DDoS、端口扫描、受控横向扫描、CPU 飙升和系统调用异常。网络探测只会访问 anomaly-test 隔离环境。</div></div></div>
+  <section class="experiment-grid">
+    {% for key, experiment in experiments.items() %}
+    <form class="action-card" method="post" action="/actions/experiment">
+      <h3>{{ experiment.label }}</h3><p class="muted small">{{ experiment.description }}</p>
+      <input type="hidden" name="scenario" value="{{ key }}">
+      <input type="hidden" name="model_type" value="multiclass">
+      <input type="hidden" name="duration" value="60">
+      <input type="hidden" name="threshold" value="0.5">
+      <label>检测算法</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option></select>
+      <button>模拟并自动检测</button>
+    </form>
+    {% endfor %}
+  </section>
+
+  <div class="section-head"><div><h2>常用操作</h2><div class="muted">即时检测用于查看当前环境；采集与训练用于提升模型。</div></div></div>
+  <section class="form-grid">
+    <form class="panel" method="post" action="/actions/predict">
+      <h2>只检测当前流量</h2><p class="muted small">不会主动模拟异常，适合确认环境此刻是否正常。</p>
+      <label>检测算法</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：ONNX MLP</option></select>
+      <label>检测模式</label><select name="model_type"><option value="binary">二分类：正常 / 异常</option><option value="multiclass">六分类：正常 / 五类异常</option></select>
+      <label>回看时长（秒）</label><input name="lookback" type="number" value="120" min="30" max="3600">
+      <label>告警阈值</label><input name="threshold" type="number" value="0.7" min="0" max="1" step="0.05">
+      <button>开始即时检测</button>
+    </form>
+    <form class="panel" method="post" action="/actions/collect">
+      <h2>采集训练或评估数据</h2><p class="muted small">系统会依次模拟正常流量和七种异常子场景。每个场景 600 秒时，整次采集约 80 分钟。</p>
+      <label>数据用途与强度</label><select name="profile">
+        {% for name, profile in profiles.items() %}<option value="{{ name }}">{{ name }}：workers={{ profile.workers }}，memory={{ profile.memory_mib }} MiB</option>{% endfor %}
+      </select>
+      <label>每个场景持续秒数</label><input name="duration" type="number" value="600" min="30" max="3600">
+      <button>开始后台采集</button>
+    </form>
+    <form class="panel" method="post" action="/actions/train">
+      <h2>重新训练模型</h2><p class="muted small">提升六分类准确率时，勾选多档训练数据，并指定单独的评估数据。</p>
+      <label>算法方案</label><select name="algorithm"><option value="random_forest">方案 A：随机森林</option><option value="onnx_mlp">方案 B：PyTorch MLP → ONNX</option></select>
+      <label>模型</label><select name="model_type"><option value="multiclass">六分类：正常 / 五类异常</option><option value="binary">二分类：异常告警</option></select>
+      <label>参与训练的数据</label><div class="checks">
+        {% for name in training_runs %}<label><input type="checkbox" name="run" value="{{ name }}">{{ name }}</label>
+        {% else %}<span class="muted small">暂无可用训练数据</span>{% endfor %}
+      </div>
+      <label>独立评估数据（可选，不参与训练）</label><select name="eval_run"><option value="">暂不评估</option>
+        {% for name in evaluation_runs %}<option value="{{ name }}">{{ name }}</option>{% endfor %}
+      </select><button>开始后台训练</button>
+    </form>
+  </section>
+
+  <div class="section-head"><div><h2>检测历史</h2><div class="muted">点击运行名称查看中文检测报告。</div></div></div>
+  <section class="panel table-wrap"><table><thead><tr><th>运行</th><th>算法</th><th>模式</th><th>状态</th><th>窗口</th><th>有效观测</th><th>告警</th><th>最高异常概率</th><th>最近窗口</th></tr></thead>
+  <tbody id="runs-body">{% for run in prediction_runs %}<tr><td><a href="/runs/{{ run.name }}">{{ run.name }}</a></td><td>{{ '方案 B：ONNX' if run.algorithm == 'onnx_mlp' else '方案 A：RF' }}</td><td><span class="badge">{{ '六分类' if run.model_type == 'multiclass' else '二分类' }}</span></td>
+  <td><span class="badge {{ 'badge-bad' if run.alerts else 'badge-ok' }}">{{ '发现异常' if run.alerts else '正常' }}</span></td><td>{{ run.windows }}</td><td>{{ run.observed }}</td><td>{{ run.alerts }}</td>
+  <td>{{ '%.1f%%' | format(run.latest_alert_probability * 100) }}</td><td>{{ run.latest_time }}</td></tr>{% else %}<tr><td colspan="9">暂无检测记录</td></tr>{% endfor %}</tbody></table></section>
+
+  <div class="section-head"><div><h2>后台任务</h2><div class="muted">采集和实验需要等待 Pixie 导出，可在这里查看进度。</div></div></div>
+  <section class="panel table-wrap"><table><thead><tr><th>任务</th><th>状态</th><th>开始时间</th><th>关联运行</th><th>日志</th></tr></thead><tbody id="jobs-body">
+  {% for job in jobs %}<tr><td>{{ job.kind }}</td><td><span class="badge {{ 'badge-bad' if job.status == 'failed' else 'badge-ok' if job.status == 'completed' else 'badge-warn' }}">{{ job.status }}</span></td>
+  <td>{{ job.started_at }}</td><td>{{ job.run_name or '-' }}</td><td><a href="/jobs/{{ job.id }}">查看日志</a></td></tr>{% else %}<tr><td colspan="5">暂无后台任务</td></tr>{% endfor %}
+  </tbody></table></section>
+
+  <div class="section-head"><div><h2>数据集是怎样生成的？</h2><div class="muted">二分类和六分类共享同一份 10 秒窗口数据，只是训练目标不同。</div></div></div>
+  <section class="panel">
+    <div class="form-grid">
+      <div><h3>六分类诊断模型</h3><p class="muted small"><b>class_id</b> 是训练目标：0=正常，1=DDoS，2=端口扫描，3=横向移动，4=资源异常，5=系统调用异常。HTTP、TCP 和 DNS 洪泛都属于 DDoS 子场景。</p></div>
+      <div><h3>二分类告警模型</h3><p class="muted small"><b>label</b> 是训练目标：0=正常，1=异常。五类异常都会合并为 1。</p></div>
+    </div>
+    <p class="explain">原始 Pixie 表由 run_scenarios.sh 采集，build_dataset.py 将它们按 Pod 和 10 秒窗口聚合成 training_multiclass_windows.csv。train_model.py 根据你选择的模型，读取同一文件中的 class_id 或 label。</p>
+  </section>
+</main><script src="/static/dashboard.js"></script></body></html>

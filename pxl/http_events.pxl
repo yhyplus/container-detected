@@ -1,0 +1,7 @@
+import px
+
+df = px.DataFrame(table='http_events', start_time='-20m')
+df.pod = df.ctx['pod']
+df = df[px.contains(df.pod, 'anomaly-test/')]
+px.display(df[['time_', 'upid', 'pod', 'remote_addr', 'trace_role', 'req_method',
+               'req_path', 'req_body_size', 'resp_status', 'resp_body_size', 'latency']])

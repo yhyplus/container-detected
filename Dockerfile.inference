@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir flask joblib numpy onnxruntime scikit-learn
+
+COPY serve_onnx.py /app/serve_onnx.py
+COPY models/anomaly_mlp.onnx /app/models/anomaly_mlp.onnx
+COPY models/anomaly_mlp.onnx.data /app/models/anomaly_mlp.onnx.data
+COPY models/anomaly_mlp.json /app/models/anomaly_mlp.json
+COPY models/anomaly_mlp.scaler.joblib /app/models/anomaly_mlp.scaler.joblib
+
+EXPOSE 8080
+
+CMD ["python", "/app/serve_onnx.py", "--model", "/app/models/anomaly_mlp.onnx", "--host", "0.0.0.0", "--port", "8080"]

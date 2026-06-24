@@ -1,0 +1,9 @@
+import px
+
+df = px.DataFrame(table='process_stats', start_time='-20m')
+df.pod = df.ctx['pod']
+df.container = df.ctx['container_name']
+df = df[px.contains(df.pod, 'anomaly-test/anomaly-generator')]
+px.display(df[['time_', 'upid', 'pod', 'container', 'cpu_utime_ns', 'cpu_ktime_ns',
+               'rss_bytes', 'vsize_bytes', 'read_bytes', 'write_bytes',
+               'rchar_bytes', 'wchar_bytes']])

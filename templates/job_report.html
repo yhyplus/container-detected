@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>任务日志</title><link rel="stylesheet" href="/static/styles.css"></head>
+<body data-job-id="{{ job.id }}"><main class="shell"><p><a href="/">← 返回控制台</a></p><section class="panel">
+<span id="job-status" class="badge {{ 'badge-bad' if job.status == 'failed' else 'badge-ok' if job.status == 'completed' else 'badge-warn' }}">{{ job.status }}</span>
+<h1 style="margin-top:10px">{{ job.kind }}</h1><p class="muted">开始：{{ job.started_at }}　结束：<span id="job-finished">{{ job.finished_at or '尚未结束' }}</span></p>
+<pre id="job-log">{{ log }}</pre></section></main><script src="/static/job.js"></script></body></html>

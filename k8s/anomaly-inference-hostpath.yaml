@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-inference
+  namespace: anomaly-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-inference
+  template:
+    metadata:
+      labels:
+        app: anomaly-inference
+    spec:
+      containers:
+        - name: anomaly-inference
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          command:
+            - python
+            - /host/home/idolsingerydd/pixie-data/pipeline/serve_mlp_pure.py
+            - --weights
+            - /host/home/idolsingerydd/pixie-data/pipeline/models/anomaly_mlp_weights.json
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: host-home
+              mountPath: /host/home/idolsingerydd
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 8
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 20
+      volumes:
+        - name: host-home
+          hostPath:
+            path: /home/idolsingerydd
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anomaly-inference
+  namespace: anomaly-test
+spec:
+  selector:
+    app: anomaly-inference
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

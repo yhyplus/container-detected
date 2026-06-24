@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets and environment
+.env
+*.env
+*.key
+*.pem
+
+# Generated datasets and experiments
+runs/
+mlruns/
+reports/
+ui-logs/
+result.csv
+*.log
+
+# Generated model-registry copies
+# Keep registry/production and top-level models/ for deployment.
+registry/archived/
+registry/models/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store

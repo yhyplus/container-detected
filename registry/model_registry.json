@@ -1,0 +1,206 @@
+{
+  "benchmark": [
+    {
+      "accuracy": 0.9944444444444445,
+      "batch_rows": 1080,
+      "cpu_percent_process_aggregate": 100.08739961615292,
+      "latency_ms_mean": 13.33705431981798,
+      "latency_ms_p95": 14.30996399722062,
+      "macro_f1": 0.9953618406103666,
+      "model": "sklearn_random_forest",
+      "model_size_kib": 1498.1875,
+      "repeats": 200,
+      "rss_mib": 197.6484375,
+      "throughput_windows_sec": 80969.58171194392
+    },
+    {
+      "accuracy": 0.9907407407407407,
+      "batch_rows": 1080,
+      "cpu_percent_process_aggregate": 105.2278843866421,
+      "latency_ms_mean": 0.09460879507969366,
+      "latency_ms_p95": 0.11915699724340811,
+      "macro_f1": 0.9906978005586744,
+      "model": "onnxruntime_mlp",
+      "model_size_kib": 8.302734375,
+      "repeats": 200,
+      "rss_mib": 205.3359375,
+      "throughput_windows_sec": 11364611.51375658
+    }
+  ],
+  "benchmark_input": "runs/eval-v3-combined-v4-20260623/training_multiclass_windows.csv",
+  "data_validation_report": "reports/data_validation_report.json",
+  "generated_at": "2026-06-23T12:09:52.564757+00:00",
+  "model_artifact_snapshot": [
+    "registry/models/v4-20260623/anomaly_detector.joblib",
+    "registry/models/v4-20260623/anomaly_detector.json",
+    "registry/models/v4-20260623/anomaly_binary_detector.joblib",
+    "registry/models/v4-20260623/anomaly_binary_detector.json",
+    "registry/models/v4-20260623/anomaly_mlp.onnx",
+    "registry/models/v4-20260623/anomaly_mlp.onnx.data",
+    "registry/models/v4-20260623/anomaly_mlp.pt",
+    "registry/models/v4-20260623/anomaly_mlp.scaler.joblib",
+    "registry/models/v4-20260623/anomaly_mlp.json",
+    "registry/models/v4-20260623/anomaly_mlp_binary.onnx",
+    "registry/models/v4-20260623/anomaly_mlp_binary.onnx.data",
+    "registry/models/v4-20260623/anomaly_mlp_binary.pt",
+    "registry/models/v4-20260623/anomaly_mlp_binary.scaler.joblib",
+    "registry/models/v4-20260623/anomaly_mlp_binary.json",
+    "registry/models/v4-20260623/anomaly_mlp_weights.json",
+    "registry/models/v4-20260623/anomaly_mlp_weights.json",
+    "registry/models/v4-20260623/Dockerfile.inference-pure",
+    "registry/models/v4-20260623/anomaly-inference.yaml"
+  ],
+  "models": [
+    {
+      "accuracy": 0.9944444444444445,
+      "artifacts": [
+        "models/anomaly_detector.joblib",
+        "models/anomaly_detector.json"
+      ],
+      "benchmark": {
+        "accuracy": 0.9944444444444445,
+        "batch_rows": 1080,
+        "cpu_percent_process_aggregate": 100.08739961615292,
+        "latency_ms_mean": 13.33705431981798,
+        "latency_ms_p95": 14.30996399722062,
+        "macro_f1": 0.9953618406103666,
+        "model": "sklearn_random_forest",
+        "model_size_kib": 1498.1875,
+        "repeats": 200,
+        "rss_mib": 197.6484375,
+        "throughput_windows_sec": 80969.58171194392
+      },
+      "class_weight": "balanced",
+      "created_at": "2026-06-23T12:09:25.228270+00:00",
+      "evaluation_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ],
+      "macro_f1": 0.9953618406103666,
+      "metadata_path": "models/anomaly_detector.json",
+      "name": "random_forest_multiclass",
+      "target": "class_id",
+      "training_classes": {
+        "0": 348,
+        "1": 510,
+        "2": 241,
+        "3": 242,
+        "4": 170,
+        "5": 238
+      },
+      "training_rows": 1749,
+      "training_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ],
+      "weighted_f1": 0.9944482160492087
+    },
+    {
+      "accuracy": 0.9972222222222222,
+      "artifacts": [
+        "models/anomaly_binary_detector.joblib",
+        "models/anomaly_binary_detector.json"
+      ],
+      "class_weight": "none",
+      "created_at": "2026-06-23T12:09:26.511608+00:00",
+      "evaluation_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ],
+      "macro_f1": 0.9959640803148018,
+      "metadata_path": "models/anomaly_binary_detector.json",
+      "name": "random_forest_binary",
+      "target": "label",
+      "training_classes": {
+        "0": 348,
+        "1": 1401
+      },
+      "training_rows": 1749,
+      "training_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ],
+      "weighted_f1": 0.9972243086930472
+    },
+    {
+      "accuracy": 0.9907407407407407,
+      "artifacts": [
+        "models/anomaly_mlp.onnx",
+        "models/anomaly_mlp.pt",
+        "models/anomaly_mlp.scaler.joblib",
+        "models/anomaly_mlp.json"
+      ],
+      "benchmark": {
+        "accuracy": 0.9907407407407407,
+        "batch_rows": 1080,
+        "cpu_percent_process_aggregate": 105.2278843866421,
+        "latency_ms_mean": 0.09460879507969366,
+        "latency_ms_p95": 0.11915699724340811,
+        "macro_f1": 0.9906978005586744,
+        "model": "onnxruntime_mlp",
+        "model_size_kib": 8.302734375,
+        "repeats": 200,
+        "rss_mib": 205.3359375,
+        "throughput_windows_sec": 11364611.51375658
+      },
+      "created_at": "2026-06-23T12:09:37.185155+00:00",
+      "evaluation_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ],
+      "macro_f1": 0.9906978005586744,
+      "metadata_path": "models/anomaly_mlp.json",
+      "name": "onnx_mlp_multiclass",
+      "target": "class_id",
+      "training_classes": {
+        "0": 348,
+        "1": 510,
+        "2": 241,
+        "3": 242,
+        "4": 170,
+        "5": 238
+      },
+      "training_rows": 1749,
+      "training_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ],
+      "weighted_f1": 0.9907505341155979
+    },
+    {
+      "accuracy": 0.9907407407407407,
+      "artifacts": [
+        "models/anomaly_mlp_binary.onnx",
+        "models/anomaly_mlp_binary.pt",
+        "models/anomaly_mlp_binary.scaler.joblib",
+        "models/anomaly_mlp_binary.json"
+      ],
+      "created_at": "2026-06-23T12:09:45.874163+00:00",
+      "evaluation_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ],
+      "macro_f1": 0.9866468182335224,
+      "metadata_path": "models/anomaly_mlp_binary.json",
+      "name": "onnx_mlp_binary",
+      "target": "label",
+      "training_classes": {
+        "0": 348,
+        "1": 1401
+      },
+      "training_rows": 1749,
+      "training_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ],
+      "weighted_f1": 0.9907818168862982
+    }
+  ],
+  "previous_production_version": "auto-newdata-20260611-0108",
+  "production_path": "registry/production",
+  "production_version": "v4-20260623",
+  "stage": "Production",
+  "stage_note": "V4 expanded dataset validated on 1080 independent windows",
+  "stage_updated_at": "2026-06-23T12:10:13.901145+00:00",
+  "version": "v4-20260623"
+}

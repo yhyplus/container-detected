@@ -1,0 +1,8 @@
+import px
+
+df = px.DataFrame(table='dns_events', start_time='-20m')
+df = df[df.trace_role == 1]
+df = df[df.remote_addr == '10.43.0.10']
+df.pod = 'anomaly-test/anomaly-generator'
+df.rcode = px.pluck_int64(df.resp_header, 'rcode')
+px.display(df[['time_', 'upid', 'pod', 'local_addr', 'remote_addr', 'trace_role', 'rcode', 'latency']])

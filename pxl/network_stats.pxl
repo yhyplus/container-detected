@@ -1,0 +1,8 @@
+import px
+
+df = px.DataFrame(table='network_stats', start_time='-20m')
+df.pod = px.pod_id_to_pod_name(df.pod_id)
+df.namespace = px.pod_id_to_namespace(df.pod_id)
+df = df[df.namespace == 'anomaly-test']
+px.display(df[['time_', 'pod_id', 'pod', 'rx_bytes', 'rx_packets', 'rx_errors',
+               'rx_drops', 'tx_bytes', 'tx_packets', 'tx_errors', 'tx_drops']])

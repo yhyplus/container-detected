@@ -1,0 +1,509 @@
+{
+  "datasets": [
+    {
+      "class_id_distribution": {
+        "0": 348,
+        "1": 510,
+        "2": 241,
+        "3": 242,
+        "4": 170,
+        "5": 238
+      },
+      "columns": 35,
+      "feature_count": 26,
+      "features": [
+        {
+          "feature": "cpu_pct",
+          "max": 600.69999999,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.5140080045740423
+        },
+        {
+          "feature": "rss_mib",
+          "max": 92.2475,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.3184676958261864
+        },
+        {
+          "feature": "disk_read_kib_sec",
+          "max": 20.479999999999997,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.9977129788450543
+        },
+        {
+          "feature": "disk_write_kib_sec",
+          "max": 204.8,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8181818181818182
+        },
+        {
+          "feature": "rx_kib_sec",
+          "max": 10485.76000000001,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.6540880503144654
+        },
+        {
+          "feature": "tx_kib_sec",
+          "max": 10485.76000000001,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.5963407661520869
+        },
+        {
+          "feature": "rx_packets_sec",
+          "max": 11127.1,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.11949685534591195
+        },
+        {
+          "feature": "tx_packets_sec",
+          "max": 9578.1,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.11949685534591195
+        },
+        {
+          "feature": "connection_open_count",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "connection_active_max",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "remote_endpoint_count",
+          "max": 1400.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7238421955403087
+        },
+        {
+          "feature": "unique_dst_ip_count",
+          "max": 2.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7238421955403087
+        },
+        {
+          "feature": "unique_dst_port_count",
+          "max": 1400.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7238421955403087
+        },
+        {
+          "feature": "connection_bytes_sent",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "connection_bytes_recv",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "http_request_count",
+          "max": 9820.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8965122927387078
+        },
+        {
+          "feature": "http_rps",
+          "max": 982.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8965122927387078
+        },
+        {
+          "feature": "http_error_rate",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "http_resp_kib",
+          "max": 8592.5,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8965122927387078
+        },
+        {
+          "feature": "http_latency_avg_ms",
+          "max": 0.99625,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8965122927387078
+        },
+        {
+          "feature": "http_latency_p95_ms",
+          "max": 5.3,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8965122927387078
+        },
+        {
+          "feature": "dns_request_count",
+          "max": 260.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8267581475128645
+        },
+        {
+          "feature": "dns_failure_rate",
+          "max": 1.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8547741566609491
+        },
+        {
+          "feature": "sensor_event_count",
+          "max": 14000.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.5877644368210406
+        },
+        {
+          "feature": "process_spawn_count",
+          "max": 40.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8639222412807318
+        },
+        {
+          "feature": "sensitive_file_access_count",
+          "max": 40.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8639222412807318
+        }
+      ],
+      "issues": [],
+      "label_distribution": {
+        "0": 348,
+        "1": 1401
+      },
+      "name": "train",
+      "passed": true,
+      "path": "runs/train-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "rows": 1749,
+      "scenario_distribution": {
+        "cpu": 170,
+        "dns_flood": 169,
+        "http_flood": 169,
+        "lateral_movement": 242,
+        "network_connections": 172,
+        "normal": 348,
+        "portscan": 241,
+        "syscall_anomaly": 238
+      },
+      "warnings": [
+        "disk_read_kib_sec zero_rate=0.998",
+        "connection_open_count zero_rate=1.000",
+        "connection_active_max zero_rate=1.000",
+        "connection_bytes_sent zero_rate=1.000",
+        "connection_bytes_recv zero_rate=1.000",
+        "http_error_rate zero_rate=1.000"
+      ]
+    },
+    {
+      "class_id_distribution": {
+        "0": 238,
+        "1": 358,
+        "2": 120,
+        "3": 122,
+        "4": 120,
+        "5": 122
+      },
+      "columns": 35,
+      "feature_count": 26,
+      "features": [
+        {
+          "feature": "cpu_pct",
+          "max": 611.99999999,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.3435185185185185
+        },
+        {
+          "feature": "rss_mib",
+          "max": 38.082499999999996,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.21666666666666667
+        },
+        {
+          "feature": "disk_read_kib_sec",
+          "max": 20.640000000000008,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.9972222222222222
+        },
+        {
+          "feature": "disk_write_kib_sec",
+          "max": 71.68000000000029,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7212962962962963
+        },
+        {
+          "feature": "rx_kib_sec",
+          "max": 49356.28,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8222222222222222
+        },
+        {
+          "feature": "tx_kib_sec",
+          "max": 23142.18,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.6546296296296297
+        },
+        {
+          "feature": "rx_packets_sec",
+          "max": 252798.1,
+          "min": 0.1,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.0
+        },
+        {
+          "feature": "tx_packets_sec",
+          "max": 303510.5,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.001851851851851852
+        },
+        {
+          "feature": "connection_open_count",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "connection_active_max",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "remote_endpoint_count",
+          "max": 900.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7759259259259259
+        },
+        {
+          "feature": "unique_dst_ip_count",
+          "max": 2.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7759259259259259
+        },
+        {
+          "feature": "unique_dst_port_count",
+          "max": 900.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.7759259259259259
+        },
+        {
+          "feature": "connection_bytes_sent",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "connection_bytes_recv",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "http_request_count",
+          "max": 9998.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "http_rps",
+          "max": 999.8,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "http_error_rate",
+          "max": 0.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 1.0
+        },
+        {
+          "feature": "http_resp_kib",
+          "max": 8746.5,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "http_latency_avg_ms",
+          "max": 0.14378,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "http_latency_p95_ms",
+          "max": 0.58,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "dns_request_count",
+          "max": 270.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8018518518518518
+        },
+        {
+          "feature": "dns_failure_rate",
+          "max": 1.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8222222222222222
+        },
+        {
+          "feature": "sensor_event_count",
+          "max": 7567.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.662962962962963
+        },
+        {
+          "feature": "process_spawn_count",
+          "max": 40.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        },
+        {
+          "feature": "sensitive_file_access_count",
+          "max": 40.0,
+          "min": 0.0,
+          "missing_rate": 0.0,
+          "non_numeric_rate": 0.0,
+          "zero_rate": 0.8870370370370371
+        }
+      ],
+      "issues": [],
+      "label_distribution": {
+        "0": 238,
+        "1": 842
+      },
+      "name": "eval",
+      "passed": true,
+      "path": "runs/eval-v3-combined-v4-20260623/training_multiclass_windows.csv",
+      "rows": 1080,
+      "scenario_distribution": {
+        "cpu": 120,
+        "dns_flood": 122,
+        "http_flood": 115,
+        "lateral_movement": 122,
+        "network_connections": 121,
+        "normal": 238,
+        "portscan": 120,
+        "syscall_anomaly": 122
+      },
+      "warnings": [
+        "disk_read_kib_sec zero_rate=0.997",
+        "connection_open_count zero_rate=1.000",
+        "connection_active_max zero_rate=1.000",
+        "connection_bytes_sent zero_rate=1.000",
+        "connection_bytes_recv zero_rate=1.000",
+        "http_error_rate zero_rate=1.000"
+      ]
+    }
+  ],
+  "generated_at": "2026-06-23T12:09:22.926258+00:00",
+  "passed": true,
+  "thresholds": {
+    "min_class_rows": 20,
+    "min_eval_rows": 120,
+    "min_train_rows": 300
+  }
+}

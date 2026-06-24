@@ -1,0 +1,116 @@
+{
+  "class_names": {
+    "0": "normal",
+    "1": "ddos",
+    "2": "portscan",
+    "3": "lateral_movement",
+    "4": "resource_anomaly",
+    "5": "syscall_anomaly"
+  },
+  "classes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "created_at": "2026-06-23T12:09:37.185155+00:00",
+  "evaluation_report": {
+    "0": {
+      "f1-score": 0.983402489626556,
+      "precision": 0.9713114754098361,
+      "recall": 0.9957983193277311,
+      "support": 238.0
+    },
+    "1": {
+      "f1-score": 0.9943977591036415,
+      "precision": 0.9971910112359551,
+      "recall": 0.9916201117318436,
+      "support": 358.0
+    },
+    "2": {
+      "f1-score": 0.9915966386554622,
+      "precision": 1.0,
+      "recall": 0.9833333333333333,
+      "support": 120.0
+    },
+    "3": {
+      "f1-score": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "support": 122.0
+    },
+    "4": {
+      "f1-score": 0.9747899159663865,
+      "precision": 0.9830508474576272,
+      "recall": 0.9666666666666667,
+      "support": 120.0
+    },
+    "5": {
+      "f1-score": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "support": 122.0
+    },
+    "accuracy": 0.9907407407407407,
+    "macro avg": {
+      "f1-score": 0.9906978005586744,
+      "precision": 0.9919255556839031,
+      "recall": 0.9895697385099291,
+      "support": 1080.0
+    },
+    "weighted avg": {
+      "f1-score": 0.9907505341155979,
+      "precision": 0.9908635322823409,
+      "recall": 0.9907407407407407,
+      "support": 1080.0
+    }
+  },
+  "evaluation_runs": [
+    "runs/eval-v3-combined-auto-newdata-20260611-0108",
+    "runs/eval-v4-large-20260623"
+  ],
+  "features": [
+    "cpu_pct",
+    "rss_mib",
+    "disk_read_kib_sec",
+    "disk_write_kib_sec",
+    "rx_kib_sec",
+    "tx_kib_sec",
+    "rx_packets_sec",
+    "tx_packets_sec",
+    "connection_open_count",
+    "connection_active_max",
+    "remote_endpoint_count",
+    "unique_dst_ip_count",
+    "unique_dst_port_count",
+    "connection_bytes_sent",
+    "connection_bytes_recv",
+    "http_request_count",
+    "http_rps",
+    "http_error_rate",
+    "http_resp_kib",
+    "http_latency_avg_ms",
+    "http_latency_p95_ms",
+    "dns_request_count",
+    "dns_failure_rate",
+    "sensor_event_count",
+    "process_spawn_count",
+    "sensitive_file_access_count"
+  ],
+  "target": "class_id",
+  "training_classes": {
+    "0": 348,
+    "1": 510,
+    "2": 241,
+    "3": 242,
+    "4": 170,
+    "5": 238
+  },
+  "training_rows": 1749,
+  "training_runs": [
+    "runs/train-v3-combined-auto-newdata-20260611-0108",
+    "runs/train-v4-large-20260623"
+  ]
+}

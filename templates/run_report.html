@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>检测报告</title><link rel="stylesheet" href="/static/styles.css"></head>
+<body><main class="shell">
+  <header class="topbar"><div><a href="/">← 返回控制台</a><h1 style="margin-top:12px">检测报告</h1><div class="muted">{{ run_name }}</div></div>
+  <span class="badge">{{ '方案 B：ONNX' if summary.algorithm == 'onnx_mlp' else '方案 A：RF' }} · {{ '六分类诊断' if summary.model_type == 'multiclass' else '二分类告警' }}</span></header>
+  <section class="hero"><div><span class="badge {{ 'badge-bad' if summary.alerts else 'badge-ok' }}">{{ '发现异常' if summary.alerts else '环境正常' }}</span>
+    <h2 style="margin-top:10px">{{ '模型发现了需要关注的异常流量' if summary.alerts else '模型没有发现需要告警的异常流量' }}</h2>
+    <p class="muted">{{ '下方只展示触发告警的时间窗口。' if showing_alerts else '下方展示最近的观测窗口，供你确认当前环境状态。' }}</p></div>
+    <div><div class="muted">告警窗口</div><div class="hero-number {{ 'status-bad' if summary.alerts else 'status-ok' }}">{{ summary.alerts }}</div></div></section>
+  <section class="metrics">
+    <div class="metric"><div class="metric-label">检查窗口</div><div class="metric-value">{{ summary.windows }}</div></div>
+    <div class="metric"><div class="metric-label">有效遥测窗口</div><div class="metric-value">{{ summary.observed }}</div></div>
+    <div class="metric"><div class="metric-label">告警窗口</div><div class="metric-value {{ 'status-bad' if summary.alerts else 'status-ok' }}">{{ summary.alerts }}</div></div>
+    <div class="metric"><div class="metric-label">最高异常概率</div><div class="metric-value">{{ '%.1f%%' | format(summary.latest_alert_probability * 100) }}</div></div>
+  </section>
+  <section class="panel">
+    <h2>{{ '异常详情' if showing_alerts else '最近状态' }}</h2>
+    <p class="explain">每一行代表一个 Pod 在 10 秒内的状态。先看“结论”和“异常概率”；其余指标用于解释原因。遥测有效表示窗口中至少有一个 CPU、网络或实验传感器指标不为零。</p>
+    <div class="table-wrap"><table><thead><tr><th>时间</th><th>Pod</th><th>结论</th><th>异常概率</th><th>CPU %</th><th>HTTP 请求/秒</th><th>发送包/秒</th><th>目标 IP</th><th>目标端口</th><th>进程启动</th><th>敏感文件访问</th><th>遥测有效</th></tr></thead>
+    <tbody>{% for row in rows %}<tr><td>{{ row.window_start }}</td><td><code>{{ row.pod }}</code></td>
+    <td><span class="badge {{ 'badge-bad' if row.is_anomaly == '1' else 'badge-ok' }}">{{ labels.get(row.predicted_class, row.predicted_class) }}</span></td>
+    <td>{{ '%.1f%%' | format(row.anomaly_probability|float * 100) }}</td><td>{{ '%.2f' | format(row.cpu_pct|float) }}</td>
+    <td>{{ '%.2f' | format(row.http_rps|float) }}</td><td>{{ '%.2f' | format(row.tx_packets_sec|float) }}</td><td>{{ row.unique_dst_ip_count or '0' }}</td><td>{{ row.unique_dst_port_count or '0' }}</td><td>{{ row.process_spawn_count or '0' }}</td><td>{{ row.sensitive_file_access_count or '0' }}</td><td>{{ '是' if row.has_signal == '1' else '否' }}</td></tr>{% endfor %}</tbody></table></div>
+    <details><summary>原始文件是做什么的？</summary>
+      <p class="muted small"><b>predictions.csv</b> 保存所有窗口的完整模型输入和输出；<b>alerts.csv</b> 只保留触发告警的窗口；<b>summary.json</b> 保存本次检测的机器可读摘要。日常查看本页面即可，不需要直接阅读这些文件。</p>
+    </details>
+  </section>
+</main></body></html>

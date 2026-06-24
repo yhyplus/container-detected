@@ -1,0 +1,32 @@
+{
+  "events": [
+    {
+      "event": "promote",
+      "note": "baseline production model after K3s inference validation",
+      "previous_production_version": null,
+      "time": "2026-06-10T05:45:33.849792+00:00",
+      "version": "20260603-final"
+    },
+    {
+      "event": "promote",
+      "note": "refresh production registry metadata for release gate baseline",
+      "previous_production_version": "20260603-final",
+      "time": "2026-06-10T14:05:27.122554+00:00",
+      "version": "20260603-final"
+    },
+    {
+      "event": "promote",
+      "note": "validated by mlops_auto_retrain.py",
+      "previous_production_version": null,
+      "time": "2026-06-10T17:11:46.670920+00:00",
+      "version": "auto-newdata-20260611-0108"
+    },
+    {
+      "event": "promote",
+      "note": "V4 expanded dataset validated on 1080 independent windows",
+      "previous_production_version": "auto-newdata-20260611-0108",
+      "time": "2026-06-23T12:10:13.901145+00:00",
+      "version": "v4-20260623"
+    }
+  ]
+}

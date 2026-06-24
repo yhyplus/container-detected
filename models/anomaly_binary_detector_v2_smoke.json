@@ -1,0 +1,37 @@
+{
+  "created_at": "2026-06-02T05:11:38.495423+00:00",
+  "evaluation_report": null,
+  "evaluation_runs": [],
+  "features": [
+    "cpu_pct",
+    "rss_mib",
+    "disk_read_kib_sec",
+    "disk_write_kib_sec",
+    "rx_kib_sec",
+    "tx_kib_sec",
+    "rx_packets_sec",
+    "tx_packets_sec",
+    "connection_open_count",
+    "connection_active_max",
+    "remote_endpoint_count",
+    "connection_bytes_sent",
+    "connection_bytes_recv",
+    "http_request_count",
+    "http_rps",
+    "http_error_rate",
+    "http_resp_kib",
+    "http_latency_avg_ms",
+    "http_latency_p95_ms",
+    "dns_request_count",
+    "dns_failure_rate"
+  ],
+  "target": "label",
+  "training_classes": {
+    "0": 6,
+    "1": 5
+  },
+  "training_rows": 11,
+  "training_runs": [
+    "runs/v2-smoke"
+  ]
+}

@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: anomaly-image-import
+  namespace: anomaly-test
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: import-image
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          command:
+            - /host/usr/local/bin/k3s
+            - ctr
+            - -n
+            - k8s.io
+            - images
+            - import
+            - /host-tmp/anomaly-inference-latest.tar
+          volumeMounts:
+            - name: host-k3s
+              mountPath: /host/usr/local/bin/k3s
+              readOnly: true
+            - name: host-tmp
+              mountPath: /host-tmp
+              readOnly: true
+            - name: containerd-sock
+              mountPath: /run/k3s/containerd/containerd.sock
+      volumes:
+        - name: host-k3s
+          hostPath:
+            path: /usr/local/bin/k3s
+            type: File
+        - name: host-tmp
+          hostPath:
+            path: /tmp
+            type: Directory
+        - name: containerd-sock
+          hostPath:
+            path: /run/k3s/containerd/containerd.sock
+            type: Socket

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-generator
+  namespace: anomaly-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-generator
+  template:
+    metadata:
+      labels:
+        app: anomaly-generator
+    spec:
+      containers:
+      - name: generator
+        image: python:3.12-alpine
+        imagePullPolicy: IfNotPresent
+        command: ["sleep", "infinity"]
+        resources:
+          requests:
+            cpu: 25m
+            memory: 32Mi
+          limits:
+            cpu: "2"
+            memory: 384Mi
+        volumeMounts:
+        - name: simulator
+          mountPath: /app
+          readOnly: true
+      volumes:
+      - name: simulator
+        configMap:
+          name: anomaly-simulator

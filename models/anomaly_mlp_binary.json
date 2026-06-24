@@ -1,0 +1,80 @@
+{
+  "class_names": {
+    "0": "normal",
+    "1": "anomaly"
+  },
+  "classes": [
+    0,
+    1
+  ],
+  "created_at": "2026-06-23T12:09:45.874163+00:00",
+  "evaluation_report": {
+    "0": {
+      "f1-score": 0.979253112033195,
+      "precision": 0.9672131147540983,
+      "recall": 0.9915966386554622,
+      "support": 238.0
+    },
+    "1": {
+      "f1-score": 0.9940405244338498,
+      "precision": 0.9976076555023924,
+      "recall": 0.9904988123515439,
+      "support": 842.0
+    },
+    "accuracy": 0.9907407407407407,
+    "macro avg": {
+      "f1-score": 0.9866468182335224,
+      "precision": 0.9824103851282453,
+      "recall": 0.9910477255035031,
+      "support": 1080.0
+    },
+    "weighted avg": {
+      "f1-score": 0.9907818168862982,
+      "precision": 0.9909095993004535,
+      "recall": 0.9907407407407407,
+      "support": 1080.0
+    }
+  },
+  "evaluation_runs": [
+    "runs/eval-v3-combined-auto-newdata-20260611-0108",
+    "runs/eval-v4-large-20260623"
+  ],
+  "features": [
+    "cpu_pct",
+    "rss_mib",
+    "disk_read_kib_sec",
+    "disk_write_kib_sec",
+    "rx_kib_sec",
+    "tx_kib_sec",
+    "rx_packets_sec",
+    "tx_packets_sec",
+    "connection_open_count",
+    "connection_active_max",
+    "remote_endpoint_count",
+    "unique_dst_ip_count",
+    "unique_dst_port_count",
+    "connection_bytes_sent",
+    "connection_bytes_recv",
+    "http_request_count",
+    "http_rps",
+    "http_error_rate",
+    "http_resp_kib",
+    "http_latency_avg_ms",
+    "http_latency_p95_ms",
+    "dns_request_count",
+    "dns_failure_rate",
+    "sensor_event_count",
+    "process_spawn_count",
+    "sensitive_file_access_count"
+  ],
+  "target": "label",
+  "training_classes": {
+    "0": 348,
+    "1": 1401
+  },
+  "training_rows": 1749,
+  "training_runs": [
+    "runs/train-v3-combined-auto-newdata-20260611-0108",
+    "runs/train-v4-large-20260623"
+  ]
+}

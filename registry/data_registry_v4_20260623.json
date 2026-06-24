@@ -1,0 +1,75 @@
+{
+  "datasets": [
+    {
+      "class_id_distribution": {
+        "0": 348,
+        "1": 510,
+        "2": 241,
+        "3": 242,
+        "4": 170,
+        "5": 238
+      },
+      "columns": 35,
+      "combined_path": "runs/train-v4-combined-20260623/training_multiclass_windows.csv",
+      "feature_count": 26,
+      "label_distribution": {
+        "0": 348,
+        "1": 1401
+      },
+      "name": "train",
+      "rows": 1749,
+      "scenario_distribution": {
+        "cpu": 170,
+        "dns_flood": 169,
+        "http_flood": 169,
+        "lateral_movement": 242,
+        "network_connections": 172,
+        "normal": 348,
+        "portscan": 241,
+        "syscall_anomaly": 238
+      },
+      "source_runs": [
+        "runs/train-v3-combined-auto-newdata-20260611-0108",
+        "runs/train-v4-large-20260623"
+      ]
+    },
+    {
+      "class_id_distribution": {
+        "0": 238,
+        "1": 358,
+        "2": 120,
+        "3": 122,
+        "4": 120,
+        "5": 122
+      },
+      "columns": 35,
+      "combined_path": "runs/eval-v4-combined-20260623/training_multiclass_windows.csv",
+      "feature_count": 26,
+      "label_distribution": {
+        "0": 238,
+        "1": 842
+      },
+      "name": "eval",
+      "rows": 1080,
+      "scenario_distribution": {
+        "cpu": 120,
+        "dns_flood": 122,
+        "http_flood": 115,
+        "lateral_movement": 122,
+        "network_connections": 121,
+        "normal": 238,
+        "portscan": 120,
+        "syscall_anomaly": 122
+      },
+      "source_runs": [
+        "runs/eval-v3-combined-auto-newdata-20260611-0108",
+        "runs/eval-v4-large-20260623"
+      ]
+    }
+  ],
+  "generated_at": "2026-06-23T09:37:16.756669+00:00",
+  "note": "Expanded independent train/eval traffic collection; models not retrained yet.",
+  "stage": "Candidate",
+  "train_eval_window_key_overlap": 0,
+  "version": "v4-20260623"
+}
