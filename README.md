@@ -1,6 +1,6 @@
 # Container Anomaly Detection
 
-基于 Pixie 的容器异常监测、数据集生成与 MLOps 流水线。
+基于 eBPF 的容器异常监测、数据集生成与 MLOps 流水线。
 
 ## Pixie anomaly dataset pipeline
 
