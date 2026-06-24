@@ -1,4 +1,8 @@
-# Pixie anomaly dataset pipeline
+# Container Anomaly Detection
+
+基于 Pixie 的容器异常监测、数据集生成与 MLOps 流水线。
+
+## Pixie anomaly dataset pipeline
 
 This pipeline generates isolated workloads in the `anomaly-test` namespace and
 aggregates Pixie observations and controlled experiment sensor events into
